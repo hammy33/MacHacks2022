@@ -1,0 +1,23 @@
+{% extends "Base.html" %}
+{% block title %}MY APP - Login Page{% endblock %}
+
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+<a href="/sign_up">New User? Sign up here.</a><br>
+
+<h1>Login</h1>
+
+<form action="#" method="post">
+    <p>Name:</p>
+    <p><input type="text" name="nm"></p>
+    <p>Password:</p>
+    <p><input type="password" name="password"></p>
+    <p><input type="submit" value="Login"></p>
+</form>
+{% endblock %}
