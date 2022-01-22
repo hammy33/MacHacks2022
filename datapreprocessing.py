@@ -9,3 +9,4 @@ import math
 data_labels = pd.read_csv('C:\Users\hammy\Desktop\git\MacHacks2022',index_col=0)
 data_dir = 'C:\Users\hammy\Desktop\git\MacHacks2022\ChestScanImages'
 patients = os.listdir(data_dir)
+
