@@ -1,21 +1,28 @@
 import os
 from pydoc import Doc
+from wsgiref.util import request_uri
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, jsonify, redirect, url_for, render_template, session, flash
 from werkzeug.utils import secure_filename
-
+import upload
 
 app = Flask(__name__)
+
 UPLOAD_FOLDER = 'static/uploads/'
 
-app.secret_key = "FDM_fcg3_2021"
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
-
+app.secret_key = "BOOBY TRAP"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+#app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+
+ALLOWED_EXTENSIONS = set('png')
+
 db = SQLAlchemy(app)
+
+
+def allowed_file(filename):
+	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 class Doctor(db.Model):
         userid = db.Column(db.String(20), unique=True,  primary_key=True, nullable=False) 
@@ -25,7 +32,6 @@ class Doctor(db.Model):
         bio = db.Column(db.String(120))
         def __repr__(self):
                 return f"{self.userid} - {self.name}"
-
 
 @app.route("/")
 def Homepage():
@@ -44,7 +50,7 @@ def sign_up():
         db.session.commit()
 
         flash("Signed up successfully!")
-        return redirect(url_for("login"))
+        return redirect(url_for("Home"))
     else:
         if "name" in session:
             flash("Already logged in!")
@@ -72,13 +78,46 @@ def login():
             flash("User not found.")
             return redirect(url_for("login"))
 
-        flash("Logged in successfully!")
-        return redirect(url_for("user"))
+        db.flash("Logged in successfully!")
+        return redirect(url_for("Home"))
     else:
         if "user" in session:
             flash("Already logged in!")
             return redirect(url_for("user"))
         return render_template("Login.html")
+
+@app.route('/Home', methods=["GET","POST"])
+def Home():
+    if(): #Picks enter new
+        return redirect(url_for("new_scans"))
+
+    else: #Lookatold
+        return
+
+@app.route("/new-scan")
+def load():
+    return render_template("Upload.html")
+
+@app.route("/new-scan", methods=["POST", "GET"])
+def upload():
+    if ('files[]' not in request.files):
+        flash('No file part')
+        return redirect(request.url)
+    
+    files = request.files.getlist('files[]')
+    file_names = []
+    for file in files:
+        filename = secure_filename(file.filename)
+        file_names.append(filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+    return render_template('upload.html', filenames=file_names)
+
+@app.route('/display/<filename>')
+def display_image(filename):
+	print('display_image filename: ' + filename)
+	return redirect(url_for('static', filename='uploads/' + filename), code=301)
+
 
 
 if __name__ == "__main__":
