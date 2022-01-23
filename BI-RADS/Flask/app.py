@@ -88,6 +88,10 @@ def login():
 def Home():
     return render_template('HomePage.html')
 
+@app.route("/patients")
+def patients():
+    return render_template("Patients.html")
+
 
 @app.route("/new-scan")
 def load():
