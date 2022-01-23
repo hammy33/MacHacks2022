@@ -1,0 +1,21 @@
+{% extends "Main.html" %}
+{% block title %}MY APP - Results{% endblock %}
+
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+
+
+<h1>BI-RAD Level 1</h1>
+    <p>The patients mammogram are negative and there is no cancer. The breasts are of equal density. </p>
+<h2>Recommendation</h2>
+     <p>Patient should continue annual screenings.</p>
+
+<a href="/Home">Return Home</a><br>
+{% endblock %}

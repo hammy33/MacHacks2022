@@ -1,0 +1,21 @@
+{% extends "Main.html" %}
+{% block title %}MY APP - Results{% endblock %}
+
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+
+
+<h1>BIRAD Level 0</h1>
+    <p>The findings from these scans are incomplete. Please upload additional imaging to further evaluate.</p>
+<h2>Recommendation</h2>
+     <p>Please contact patient to reschedule mammogram.</p>
+
+<a href="/Home">Return Home</a><br>
+{% endblock %}
