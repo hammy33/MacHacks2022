@@ -84,7 +84,7 @@ def login():
             return redirect(url_for("user"))
         return render_template("Login.html")
 
-@app.route('/Home', methods=["GET","POST"])
+@app.route('/Home')
 def Home():
     return render_template('HomePage.html')
 
