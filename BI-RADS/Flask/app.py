@@ -48,8 +48,6 @@ def sign_up():
         Doc = Doctor(password=password, name=name, userid=len(Doctor.query.all()))
         db.session.add(Doc)
         db.session.commit()
-
-        flash("Signed up successfully!")
         return redirect(url_for("Home"))
     else:
         if "name" in session:
@@ -88,11 +86,8 @@ def login():
 
 @app.route('/Home', methods=["GET","POST"])
 def Home():
-    if(): #Picks enter new
-        return redirect(url_for("load"))
+    return render_template('HomePage.html')
 
-    else: #Lookatold
-        return
 
 @app.route("/new-scan")
 def load():

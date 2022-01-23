@@ -14,21 +14,22 @@ h2 {
 	display: flex;
 	color: black;
 }
+
+.navbar-nav li a{
+  color:  #f56ebd;
+  }
+
 .nav-item {
 	padding-left: 20px;
 	padding-right: 20px;
 	font-size: 20px;
 }
 
-.test {
-	color: red;
-}
-
 .block {
   display: inline-block;
   width: 100%;
   border: none;
-  background-color: #2F7EF6;
+  background-color: #f56ebd;
   color: white;
   padding: 14px 28px;
   font-size: 16px;
@@ -39,8 +40,7 @@ h2 {
 }
 
 .block:hover {
-  background-color: #1E58AD;
-  color: white;
+  opacity: 80%;
 }
 
 .center {
