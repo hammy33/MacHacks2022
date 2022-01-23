@@ -161,13 +161,13 @@ def nextSteps():
     }
 
     if prediction.inference(parameters_)[2] >= prediction.inference(parameters_)[1] and prediction.inference(parameters_)[2] >= prediction.inference(parameters_)[0]:
-        render_template("biradzero.html")
+        render_template("BI_RADS2.html")
     
     elif prediction.inference(parameters_)[1] >= prediction.inference(parameters_)[0]:
-        render_template("biradone.html")
+        render_template("BI_RADS1.html")
 
     else:
-        render_template("biradtwo.html")
+        render_template("BI_RADS0.html")
 
 
 
