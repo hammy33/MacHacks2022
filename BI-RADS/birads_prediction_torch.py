@@ -34,7 +34,7 @@ def inference(parameters, verbose=True):
         "R-MLO": torch.Tensor(datum_r_mlo).permute(0, 3, 1, 2).to(device),
     }
 
-    # run prediction
+    # run prediction This is where the mnumbers are returned
     with torch.no_grad():
         prediction_birads = model(x).cpu().numpy()
 
