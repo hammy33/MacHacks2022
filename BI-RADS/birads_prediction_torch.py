@@ -57,7 +57,7 @@ if __name__ == "__main__":
     parser.add_argument('--model-path', default='saved_models/model.p')
     parser.add_argument('--device-type', default="cpu")
     parser.add_argument('--gpu-number', default=0, type=int)
-    parser.add_argument('--image-path', default="images/")
+    parser.add_argument('--image-path', default="Flask/static/uploads/")
     args = parser.parse_args()
 
     parameters_ = {
