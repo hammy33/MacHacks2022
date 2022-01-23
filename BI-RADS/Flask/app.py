@@ -5,6 +5,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, jsonify, redirect, url_for, render_template, session, flash
 from werkzeug.utils import secure_filename
 import upload
+import birads_prediction_torch as prediction
+import argparse
 
 app = Flask(__name__)
 
@@ -48,6 +50,8 @@ def sign_up():
         Doc = Doctor(password=password, name=name, userid=len(Doctor.query.all()))
         db.session.add(Doc)
         db.session.commit()
+
+        flash("Signed up successfully!")
         return redirect(url_for("Home"))
     else:
         if "name" in session:
@@ -86,12 +90,12 @@ def login():
 
 @app.route('/Home')
 def Home():
-    return render_template('HomePage.html')
+    if(): #Picks enter new
+        return redirect(url_for("load"))
 
 @app.route("/patients")
 def patients():
     return render_template("Patients.html")
-
 
 @app.route("/new-scan")
 def load():
@@ -137,3 +141,34 @@ def delete_doctor(id):
 
 if __name__ == "__main__":
     db.create_all()
+
+@app.route()
+def nextSteps():
+
+    parser = argparse.ArgumentParser(description='Run Inference')
+    parser.add_argument('--model-path', default='saved_models/model.ckpt')
+    parser.add_argument('--device-type', default="cpu")
+    parser.add_argument('--gpu-number', default=0, type=int)
+    parser.add_argument('--image-path', default="Flask/static/uploads/")
+    args = parser.parse_args()
+
+    parameters_ = {
+        "model_path": args.model_path,
+        "device_type": args.device_type,
+        "gpu_number": args.gpu_number,
+        "image_path": args.image_path,
+        "input_size": (2600, 2000),
+    }
+
+    if prediction.inference(parameters_)[2] >= prediction.inference(parameters_)[1] and prediction.inference(parameters_)[2] >= prediction.inference(parameters_)[0]:
+        render_template("biradzero.html")
+    
+    elif prediction.inference(parameters_)[1] >= prediction.inference(parameters_)[0]:
+        render_template("biradone.html")
+
+    else:
+        render_template("biradtwo.html")
+
+
+
+
