@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 UPLOAD_FOLDER = 'static/uploads/'
 
-app.secret_key = "BOOBY TRAP"
+app.secret_key = "BOOBYTRAP"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -120,13 +120,21 @@ def display_image(filename):
 
 @app.route('/doctors')
 def get_doctors():
-    sellers = Doctor.query.all()
+    doctors = Doctor.query.all()
     output = []
-    for seller in sellers:
-        seller_data = {'User ID': Doctor.userid, 'Name': Doctor.name}
-        output.append(seller_data)
-    return{"sellers": output}
+    for doc in doctors:
+        doc_data = {'User ID': doc.userid, 'Name': doc.name}
+        output.append(doc_data)
+    return{"Doctors": output}
+
+@app.route('/doctors/<id>', methods=['DELETE'])
+def delete_doctor(id):
+    doc  = Doctor.query.get(id)
+    if doc is None:
+        return {"Error":"404"}
+    db.session.delete(doc)
+    db.session.commit()
+    return ("Doctor ID Number " + id + " has been deleted.")
 
 if __name__ == "__main__":
     db.create_all()
-    app.run(debug=True)
