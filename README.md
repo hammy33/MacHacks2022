@@ -2,7 +2,7 @@
 
 ## Installation Requirements
 Navigate to the main directory and create/activate a virtual environment: <code>sourve /path_to_venv/Scripts/activate</code>
-Ensure that the necessary libraries are installed: <code>pip install flask, torch, torchvision</code>.
+Ensure that the necessary libraries are installed: <code>pip install flask torch torchvision</code>.
 Navigate to the Flask directory and run the application: <code>flask run</code>.
 
 ## Inspiration
