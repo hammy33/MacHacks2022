@@ -164,7 +164,6 @@ def Predictions():
 
     x, y, z = prediction.inference(parameters_) 
     print(x,y,z)
-
     return x,y,z
 
 if __name__ == "__main__":
