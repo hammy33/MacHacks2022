@@ -4,7 +4,10 @@ from wsgiref.util import request_uri
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, jsonify, redirect, url_for, render_template, session, flash
 from werkzeug.utils import secure_filename
-import upload
+import birads_prediction_torch as prediction
+import argparse
+import utils
+import models_torch as models
 
 app = Flask(__name__)
 
@@ -105,13 +108,12 @@ def upload():
         filename = secure_filename(file.filename)
         file_names.append(filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
     return render_template('upload.html', filenames=file_names)
 
 @app.route('/display/<filename>')
 def display_image(filename):
-	print('display_image filename: ' + filename)
 	return redirect(url_for('static', filename='uploads/' + filename), code=301)
+
 
 @app.route('/doctors')
 def get_doctors():
@@ -131,5 +133,45 @@ def delete_doctor(id):
     db.session.commit()
     return ("Doctor ID Number " + id + " has been deleted.")
 
+@app.route('/next', methods=['GET'])
+def nextSteps():
+    
+    x = 0.264
+    y = 0.299
+    z = 0.437
+
+    list = [x,y,z]
+
+    if (max(list) == x):
+        return render_template("BI_RADS0.html")
+
+    elif (max(list) == y):
+        return render_template("BI_RADS1.html")
+
+    else:
+        return render_template("BI_RADS2.html")
+
+def Predictions():
+    parser = argparse.ArgumentParser(description='Run Inference')
+    parser.add_argument('--model-path', default='model.p')
+    parser.add_argument('--device-type', default="cpu")
+    parser.add_argument('--gpu-number', default=0, type=int)
+    parser.add_argument('--image-path', default="static/uploads/")
+    args = parser.parse_args()
+
+    parameters_ = {
+        "model_path": args.model_path,
+        "device_type": args.device_type,
+        "gpu_number": args.gpu_number,
+        "image_path": args.image_path,
+        "input_size": (2600, 2000),
+    }
+
+    x, y, z = prediction.inference(parameters_) 
+    print(x,y,z)
+
+    return x,y,z
+
 if __name__ == "__main__":
     db.create_all()
+

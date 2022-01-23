@@ -14,15 +14,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body style="background-color:powderblue;">
     <nav class="navbar navbar-expand-xl new-nav">
         <div class="row container">
-            <div class="col-sm-6">
-                <h2 style="color:black">MedHelp</h2>
+            <div class="col-md-1">
+                <h2 style="color:rgb(0, 119, 255)">MammoHelp</h2>
             </div>
-            <div class="col-sm-6">
+            <div class="col-md-1">
+                <img src="static/uploads/Icon.png" style="width: 60px; height: auto;" alt="Symbol">
+            </div>
+            <div class="col-lg-2">
                 <ul class="nav navbar-nav container-fixed d-flex justify-content-right">
-                    <li class="nav-item active"><a class="active" href="/Home" style=> Home</a></li>
+                    <li class="nav-item active"><a class="active" href="/new-scan" style=>New Scan</a></li>
                     <li class="nav-item undone"><a href="/patients">Patients</a></li>
                     <li class="nav-item undone"><a href="/profile">Profile</a></li>
                 </ul>
@@ -59,9 +62,10 @@
     {% if filenames %}
 	    {% for filename in filenames %}
 		    <div>
-			    <img src="{{url_for('display_image', filename=filename)}}", style="max-width: 50%"> <br>
-		    </div>
+			    <img src="{{url_for('display_image', filename=filename)}}" style="max-width: 50%">
+            </div>
 	    {% endfor %}
+        <a href="/next"><button class="block">Recommendation</button></a>
     {% endif %}
     <form method="POST" action="/new-scan" enctype="multipart/form-data">
         <dl>
@@ -75,6 +79,8 @@
     </form>
 </div>
 </div>
+
+
 
 <body/>
 

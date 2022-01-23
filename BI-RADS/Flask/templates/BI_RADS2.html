@@ -1,0 +1,21 @@
+{% extends "Main.html" %}
+{% block title %}MY APP - Results{% endblock %}
+
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+
+
+<h1>BI-RAD Level 2</h1>
+    <p>The patient's mammogram results are normal. There are no indications of cancer, but there are some benign cysts or masses detected.</p>
+<h2>Recommendation</h2>
+     <p>Patient should continue annual screenings.</p>
+
+<a href="/Home">Return Home</a><br>
+{% endblock %}
