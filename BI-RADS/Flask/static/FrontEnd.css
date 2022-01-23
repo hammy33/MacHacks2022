@@ -7,8 +7,9 @@ HTML body {
 
 
 h2 {
-	font-size: 45px;
+	font-size: 100px;
 }
+
 .new-nav {
 	display: flex;
 	color: black;
