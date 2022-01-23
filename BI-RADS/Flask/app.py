@@ -14,6 +14,7 @@ app = Flask(__name__)
 UPLOAD_FOLDER = 'static/uploads/'
 
 app.secret_key = "BOOBYTRAP"
+list = [0.264, 0.299, 0.437]
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -135,17 +136,11 @@ def delete_doctor(id):
 
 @app.route('/next', methods=['GET'])
 def nextSteps():
-    
-    x = 0.264
-    y = 0.299
-    z = 0.437
 
-    list = [x,y,z]
-
-    if (max(list) == x):
+    if (max(list) == list[0]):
         return render_template("BI_RADS0.html")
 
-    elif (max(list) == y):
+    elif (max(list) == list[1]):
         return render_template("BI_RADS1.html")
 
     else:
